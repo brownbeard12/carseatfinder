@@ -1,11 +1,13 @@
 //const fetch = require('node-fetch');
 const pup = require('puppeteer');
+const url = 'https://www.chiccousa.com/shop-our-products/car-seats/infant/';
 
 (async function scrape() {
   const timer = 100
-  const browser = await pup.launch({ headless: false })
+  const browser = await pup.launch(/*{ headless: false }*/)
   const page = await browser.newPage();
-  await page.goto('https://www.chiccousa.com/shop-our-products/car-seats/infant/');
+  console.log('Scraping ' + url)
+  await page.goto(url);
   await page.waitForTimeout(timer)
     .then(() => page.mouse.wheel({ deltaY: 500 })
       .then(() => page.waitForTimeout(timer)
