@@ -35,9 +35,10 @@ let bprods = [];
 
 //Call scrape + query
 (async () => {
-  await scrape(main_url, brand_name);
-  console.log(bprods)
+  await scrape(main_url);
   for (prod of bprods) {
+    prod.brand = brand_name;
+    console.log(prod)
     client.query(
       q.Create(
         q.Collection('car_seats'),
@@ -48,9 +49,8 @@ let bprods = [];
   }
 })()
 
-
 //Scrape function
-async function scrape(url, brand) {
+async function scrape(url) {
   const timer = 500
   const browser = await pup.launch(/*{ headless: false }*/)
   const page = await browser.newPage();
@@ -71,7 +71,6 @@ async function scrape(url, brand) {
     let _items = Object.values(items).map(em => {
       return {
         name: em.textContent.trim(),
-        brand: brand,
       }
     })
     return _items;
