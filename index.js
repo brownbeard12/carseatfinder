@@ -2,8 +2,6 @@ require('dotenv').config()
 const faunadb = require('faunadb')
 const q = faunadb.query
 
-
-
 const secret = process.env.FAUNADB_SECRET
 let endpoint = process.env.FAUNADB_ENDPOINT
 
