@@ -29,25 +29,33 @@ const client = new faunadb.Client({
 })
 
 //Setup scrape
-const main_url = 'https://www.chiccousa.com/shop-our-products/car-seats/infant/';
+const main_url = 'https://www.chiccousa.com/';
+const cat_url = ['shop-our-products/car-seats/infant/'/*, 'harness-booster-seats/', 'shop-our-products/car-seats/all-in-one/', 'shop-our-products/car-seats/convertible/', 'shop-our-products/car-seats/booster/'*/]
 const brand_name = 'Chicco';
-let bprods = [];
+const status = 'active';
 
 //Call scrape + query
+
 (async () => {
-  await scrape(main_url);
-  for (prod of bprods) {
-    prod.brand = brand_name;
-    console.log(prod)
-    client.query(
-      q.Create(
-        q.Collection('car_seats'),
-        { data: prod }
+  for (i = 0; i < cat_url.length; i++) {
+    let search_url = main_url + cat_url[i];
+    let __prods = await scrape(search_url);
+    for (prod of __prods) {
+      prod.brand = brand_name;
+      prod.status = status;
+      prod.timestamp = Date.now();
+      console.log(prod)
+      client.query(
+        q.Create(
+          q.Collection('car_seats'),
+          { data: prod }
+        )
       )
-    )
-      .catch((err) => console.log(err))
+        .catch((err) => console.log(err))
+    }
   }
-})()
+})();
+
 
 //Scrape function
 async function scrape(url) {
@@ -67,16 +75,23 @@ async function scrape(url) {
       .then(() => page.waitForTimeout(timer * 2)));
 
   let prods = await page.evaluate(() => {
-    let items = document.body.querySelectorAll('div.product-name')
+    let items = document.body.querySelectorAll('div.product-tile')
     let _items = Object.values(items).map(em => {
+      let item_json = JSON.parse(em.querySelector('div.product-image').querySelector('a').getAttribute('data-gtmdata'));
       return {
-        name: em.textContent.trim(),
+        item_id: item_json['dimension7'],
+        prod_id: item_json['id'],
+        name: item_json['name'],
+        category: item_json['category'],
+        prod_url: em.querySelector('div.product-image').querySelector('a').getAttribute('href'),
+        img_url: em.querySelector('div.product-image').querySelector('a').querySelector('img').getAttribute('src'),
+        price: item_json['price']
       }
     })
     return _items;
   })
 
-  bprods = prods
+  //bprods = prods
   await browser.close()
   return prods;
 };
