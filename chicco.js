@@ -35,7 +35,6 @@ const brand_name = 'Chicco';
 const status = 'active';
 
 //Call scrape + query
-
 (async () => {
   for (i = 0; i < cat_url.length; i++) {
     let search_url = main_url + cat_url[i];
@@ -55,7 +54,6 @@ const status = 'active';
     }
   }
 })();
-
 
 //Scrape function
 async function scrape(url) {
@@ -91,7 +89,6 @@ async function scrape(url) {
     return _items;
   })
 
-  //bprods = prods
   await browser.close()
   return prods;
 };
