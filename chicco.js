@@ -43,14 +43,8 @@ const status = 'active';
       prod.brand = brand_name;
       prod.status = status;
       prod.timestamp = Date.now();
-      console.log(prod)
-      client.query(
-        q.Create(
-          q.Collection('car_seats'),
-          { data: prod }
-        )
-      )
-        .catch((err) => console.log(err))
+      console.log(prod);
+      addOrUpdate(prod);
     }
   }
 })();
@@ -93,3 +87,13 @@ async function scrape(url) {
   return prods;
 };
 
+//Query function
+async function addOrUpdate(prod_data) {
+  await client.query(
+    q.Create(
+      q.Collection('car_seats'),
+      { data: prod_data }
+    )
+  )
+    .catch((err) => console.log(err))
+}
