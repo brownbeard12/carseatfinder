@@ -43,9 +43,9 @@ const status = 'active';
       prod.brand = brand_name;
       prod.status = status;
       prod.timestamp = Date.now();
-      console.log(prod);
-      addOrUpdate(prod);
     }
+    //console.log(__prods);
+    addOrUpdate(__prods);
   }
 })();
 
@@ -90,10 +90,35 @@ async function scrape(url) {
 //Query function
 async function addOrUpdate(prod_data) {
   await client.query(
-    q.Create(
-      q.Collection('car_seats'),
-      { data: prod_data }
+    q.Map(prod_data,
+      q.Lambda('item',
+        q.Let(
+          {
+            itemId: q.Select(['item_id'], q.Var('item')),
+            itemPrice: q.Select(['price'], q.Var('item')),
+          },
+          q.Map(
+            q.Paginate(
+              q.Match(q.Index('products'), q.Var('itemId'))
+            ),
+            q.Lambda(
+              'item',
+              q.Call(
+                q.Function('upsert'),
+                q.Select('ref', q.Get(q.Var('item'))),
+                {
+                  data: {
+                    price: q.Var('itemPrice'),
+                    status: 'active'
+                  }
+                }
+              )
+            )
+          )
+        )
+      )
     )
   )
+    .then(item => console.log(item))
     .catch((err) => console.log(err))
 }
