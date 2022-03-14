@@ -39,14 +39,13 @@ const status = 'active';
 (async () => {
   for (i = 0; i < cat_url.length; i++) {
     let search_url = main_url + cat_url[i];
-    let __prods = await scrape(search_url);
-    for (prod of __prods) {
+    let prod_list = await scrape(search_url);
+    for (prod of prod_list) {
       prod.brand = brand_name;
       prod.status = status;
       prod.timestamp = Date.now();
     }
-    //console.log(__prods);
-    utils.addOrUpdate(client, q, __prods);
+    utils.addOrUpdate(client, q, prod_list);
   }
 })();
 
@@ -87,5 +86,3 @@ async function scrape(url) {
   await browser.close()
   return prods;
 };
-
-//Query function
