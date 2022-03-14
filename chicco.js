@@ -2,6 +2,7 @@ require('dotenv').config()
 const faunadb = require('faunadb')
 const q = faunadb.query
 const pup = require('puppeteer');
+const utils = require('./utils.js')
 
 //Setup Fauna
 const secret = process.env.FAUNADB_SECRET
@@ -30,7 +31,7 @@ const client = new faunadb.Client({
 
 //Setup scrape
 const main_url = 'https://www.chiccousa.com/';
-const cat_url = ['shop-our-products/car-seats/infant/'/*, 'harness-booster-seats/', 'shop-our-products/car-seats/all-in-one/', 'shop-our-products/car-seats/convertible/', 'shop-our-products/car-seats/booster/'*/]
+const cat_url = ['shop-our-products/car-seats/infant/', 'harness-booster-seats/', 'shop-our-products/car-seats/all-in-one/', 'shop-our-products/car-seats/convertible/', 'shop-our-products/car-seats/booster/']
 const brand_name = 'Chicco';
 const status = 'active';
 
@@ -45,7 +46,7 @@ const status = 'active';
       prod.timestamp = Date.now();
     }
     //console.log(__prods);
-    addOrUpdate(__prods);
+    utils.addOrUpdate(client, q, __prods);
   }
 })();
 
@@ -88,37 +89,3 @@ async function scrape(url) {
 };
 
 //Query function
-async function addOrUpdate(prod_data) {
-  await client.query(
-    q.Map(prod_data,
-      q.Lambda('item',
-        q.Let(
-          {
-            itemId: q.Select(['item_id'], q.Var('item')),
-            itemPrice: q.Select(['price'], q.Var('item')),
-          },
-          q.Map(
-            q.Paginate(
-              q.Match(q.Index('products'), q.Var('itemId'))
-            ),
-            q.Lambda(
-              'item',
-              q.Call(
-                q.Function('upsert'),
-                q.Select('ref', q.Get(q.Var('item'))),
-                {
-                  data: {
-                    price: q.Var('itemPrice'),
-                    status: 'active'
-                  }
-                }
-              )
-            )
-          )
-        )
-      )
-    )
-  )
-    .then(item => console.log(item))
-    .catch((err) => console.log(err))
-}
