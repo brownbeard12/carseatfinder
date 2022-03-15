@@ -37,7 +37,7 @@ const status = 'active';
 
 //Call scrape + query
 (async () => {
-  for (i = 0; i < cat_url.length; i++) {
+  for (let i = 0; i < cat_url.length; i++) {
     let search_url = main_url + cat_url[i];
     let prod_list = await scrape(search_url);
     for (prod of prod_list) {
