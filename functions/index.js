@@ -1,6 +1,6 @@
 const functions = require("firebase-functions");
 
-functions.https.onRequest((request, response) => {
+exports.chicco = functions.https.onRequest((request, response) => {
   require('dotenv').config()
   const faunadb = require('faunadb')
   const q = faunadb.query
