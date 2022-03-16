@@ -143,6 +143,7 @@ exports.diono = functions.https.onRequest((request, response) => {
         prod.status = prod_status;
         prod.timestamp = Date.now();
       }
+<<<<<<< HEAD
       console.log(prod_list)
       utils.addOrUpdate(client, q, prod_list);
     }
@@ -155,6 +156,21 @@ exports.diono = functions.https.onRequest((request, response) => {
     const page = await browser.newPage();
     console.log('Scraping ' + url)
     await page.goto(url);
+=======
+      utils.addOrUpdate(client, q, prod_list);
+    }
+  })()
+  .then(() => response.send("Complete!"));
+
+  //Scrape function
+  async function scrape(url) {
+    const timer = 200
+    const browser = await pup.launch({ headless: true, args: ['--no-sandbox'] })
+    const page = await browser.newPage();
+    console.log('Scraping ' + url)
+    await page.goto(url);
+    await page.waitForTimeout(timer)
+>>>>>>> 0a0725f1e067959d3301b157ea08f85e47f1911f
 
     let prods = await page.evaluate(() => {
       let items = document.body.querySelectorAll('article.product-card')
@@ -176,4 +192,8 @@ exports.diono = functions.https.onRequest((request, response) => {
     await browser.close()
     return prods;
   };
+<<<<<<< HEAD
 });
+=======
+});
+>>>>>>> 0a0725f1e067959d3301b157ea08f85e47f1911f
