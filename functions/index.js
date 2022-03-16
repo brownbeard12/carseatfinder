@@ -1,6 +1,8 @@
 const functions = require("firebase-functions");
 
 exports.chicco = functions.https.onRequest((request, response) => {
+//functions.pubsub.schedule('*/3 * * * *').onRun(async context => {
+
   require('dotenv').config()
   const faunadb = require('faunadb')
   const q = faunadb.query
@@ -56,7 +58,7 @@ exports.chicco = functions.https.onRequest((request, response) => {
   //Scrape function
   async function scrape(url) {
     const timer = 500
-    const browser = await pup.launch(/*{ headless: false }*/)
+    const browser = await pup.launch({ headless: true, args: ['--no-sandbox'] })
     const page = await browser.newPage();
     console.log('Scraping ' + url)
     await page.goto(url);
