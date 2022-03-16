@@ -30,10 +30,10 @@ const client = new faunadb.Client({
 })
 
 //Setup scrape
-const main_url = 'https://www.chiccousa.com/';
-const cat_url = ['shop-our-products/car-seats/infant/', 'harness-booster-seats/', 'shop-our-products/car-seats/all-in-one/', 'shop-our-products/car-seats/convertible/', 'shop-our-products/car-seats/booster/']
-const brand_name = 'Chicco';
-const status = 'active';
+const main_url = 'https://store.diono.com/car-seats/';
+const cat_url = ['all-in-one-convertibles/', 'boosters/']
+const brand_name = 'Diono';
+const prod_status = 'active';
 
 //Call scrape + query
 (async () => {
@@ -42,9 +42,10 @@ const status = 'active';
     let prod_list = await scrape(search_url);
     for (prod of prod_list) {
       prod.brand = brand_name;
-      prod.status = status;
+      prod.status = prod_status;
       prod.timestamp = Date.now();
     }
+    console.log(prod_list)
     utils.addOrUpdate(client, q, prod_list);
   }
 })();
@@ -56,27 +57,18 @@ async function scrape(url) {
   const page = await browser.newPage();
   console.log('Scraping ' + url)
   await page.goto(url);
-  await page.waitForTimeout(timer)
-    .then(() => page.mouse.wheel({ deltaY: 500 })
-      .then(() => page.waitForTimeout(timer)
-        .then(() => page.mouse.wheel({ deltaY: 2000 })))
-      .then(() => page.waitForTimeout(timer)
-        .then(() => page.mouse.wheel({ deltaY: 1000 })))
-      .then(() => page.waitForTimeout(timer * 1.5)
-        .then(() => page.mouse.wheel({ deltaY: 2000 })))
-      .then(() => page.waitForTimeout(timer * 2)));
 
   let prods = await page.evaluate(() => {
-    let items = document.body.querySelectorAll('div.product-tile')
+    let items = document.body.querySelectorAll('article.product-card')
     let _items = Object.values(items).map(em => {
-      let item_json = JSON.parse(em.querySelector('div.product-image').querySelector('a').getAttribute('data-gtmdata'));
+      let item_json = JSON.parse(em.querySelector('div.product-card__figure').querySelector('a.product-card__image').getAttribute('data-analytics-sent'));
       return {
-        item_id: item_json['dimension7'],
-        prod_id: item_json['id'],
+        item_id: item_json['name'],
+        prod_id: item_json['product_id'],
         name: item_json['name'],
         category: item_json['category'],
-        prod_url: em.querySelector('div.product-image').querySelector('a').getAttribute('href'),
-        img_url: em.querySelector('div.product-image').querySelector('a').querySelector('img').getAttribute('src'),
+        prod_url: em.querySelector('div.product-card__figure').querySelector('a.product-card__image').getAttribute('href'),
+        img_url: em.querySelector('div.product-card__figure').querySelector('a.product-card__image').querySelector('img').getAttribute('src'),
         price: item_json['price']
       }
     })
