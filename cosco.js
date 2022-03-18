@@ -15,12 +15,12 @@ async function scrape() {
       let _items = Object.values(items).map(em => {
         return {
           prod_url: em.querySelector('a.product-item-link').getAttribute('href'),
-          // item_id: 
-          // prod_id: 
+          prod_id: em.querySelector('div.price-box').getAttribute('data-product-id'),
+          item_id: "cosco-" + em.querySelector('div.price-box').getAttribute('data-product-id'),
           // name: 
           // category: 
           // img_url: 
-          // price: 
+          price: em.querySelector('div.price-box').querySelector('span.price-wrapper').getAttribute('data-price-amount'),
         }
       })
       
