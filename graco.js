@@ -47,23 +47,27 @@ const prod_status = 'active';
       prod.category = cat[i];
       prod.timestamp = Date.now();
     }
-    // console.log(prod_list);
-    utils.addOrUpdate(client, q, prod_list);
+    console.log(prod_list);
+    // utils.addOrUpdate(client, q, prod_list);
   }
 })()
-  // .then(() => response.send("Complete!"));
+// .then(() => response.send("Complete!"));
 
 //Scrape function
 async function scrape(url) {
-  const timer = 200;
+  const timer = 100;
   const browser = await pup.launch({ headless: true, args: ['--no-sandbox'] })
-  const page = await browser.newPage();
+  const context = await browser.createIncognitoBrowserContext();
+  const page = await context.newPage();
   await page.setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36");
   console.log('Scraping ' + url)
-  await page.goto(url);
-  await page.waitForTimeout(timer)
-    .then(() => page.mouse.wheel({ deltaY: 500 })
-      .then(() => page.waitForTimeout(timer)));
+  await page.goto(url, {
+    waitUntil: 'load',
+    timeout: 0,
+  });
+  await page.waitForTimeout(timer);
+  await page.keyboard.press('Escape');
+  await page.waitForTimeout(timer);
 
   let prods = await page.evaluate(() => {
     let items = document.body.querySelectorAll('div.product-tile');

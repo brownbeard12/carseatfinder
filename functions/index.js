@@ -326,10 +326,12 @@ exports.graco = functions.runWith({ memory: '2GB' }).https.onRequest((request, r
     const page = await browser.newPage();
     await page.setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36");
     console.log('Scraping ' + url)
-    await page.goto(url);
-    await page.waitForTimeout(timer)
-      .then(() => page.mouse.wheel({ deltaY: 500 })
-        .then(() => page.waitForTimeout(timer)));
+    await page.goto(url, {
+      waitUntil: 'load',
+      timeout: 0,
+    });
+    await page.waitForTimeout(timer);
+    await page.keyboard.press('Escape');
 
     let prods = await page.evaluate(() => {
       let items = document.body.querySelectorAll('div.product-tile');
@@ -345,7 +347,6 @@ exports.graco = functions.runWith({ memory: '2GB' }).https.onRequest((request, r
           img_url: em.querySelector('img.tile-image').getAttribute('src'),
           price: item_json['price'],
         }
-
       })
       return _items;
     });
