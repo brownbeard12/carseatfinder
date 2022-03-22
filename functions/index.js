@@ -322,7 +322,7 @@ exports.graco = functions.runWith({ memory: '2GB' }).https.onRequest((request, r
   //Scrape function
   async function scrape(url) {
     const timer = 200;
-    const browser = await pup.launch({ headless: true, args: ['--no-sandbox'] })
+    const browser = await pup.launch({ headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox'] })
     const page = await browser.newPage();
     await page.setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36");
     console.log('Scraping ' + url)
@@ -330,8 +330,8 @@ exports.graco = functions.runWith({ memory: '2GB' }).https.onRequest((request, r
       waitUntil: 'load',
       timeout: 0,
     });
-    await page.waitForTimeout(timer);
-    await page.keyboard.press('Escape');
+    // await page.waitForTimeout(timer);
+    // await page.keyboard.press('Escape');
 
     let prods = await page.evaluate(() => {
       let items = document.body.querySelectorAll('div.product-tile');

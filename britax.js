@@ -30,10 +30,10 @@ const client = new faunadb.Client({
 })
 
 //Setup scrape
-const main_url = 'https://www.gracobaby.com';
-const cat_url = ['/car-seats/infant-car-seats/', '/car-seats/toddler-car-seats/convertible-car-seats/', '/car-seats/toddler-car-seats/all-in-one-car-seats/', '/car-seats/booster-car-seats/']
+const main_url = 'https://us.britax.com/';
+const cat_url = ['shop/car-seats/rear-facing-only']
 const cat = ['Infant', 'Convertible', 'All-in-One', 'Booster']
-const brand_name = 'Graco';
+const brand_name = 'Britax';
 const prod_status = 'active';
 
 //Call scrape + query
@@ -43,47 +43,43 @@ const prod_status = 'active';
     let prod_list = await scrape(search_url);
     for (prod of prod_list) {
       prod.brand = brand_name;
-      prod.status = prod_status;
       prod.category = cat[i];
+      prod.status = prod_status;
       prod.timestamp = Date.now();
     }
-    console.log(prod_list);
+    console.log(prod_list)
     // utils.addOrUpdate(client, q, prod_list);
   }
-})()
-// .then(() => response.send("Complete!"));
+})();
 
 //Scrape function
 async function scrape(url) {
-  const timer = 100;
-  const browser = await pup.launch({ headless: true, args: ['--no-sandbox'] })
-  const context = await browser.createIncognitoBrowserContext();
-  const page = await context.newPage();
+  const timer = 300
+  const browser = await pup.launch({ headless: false, args: ['--no-sandbox'] })
+  const page = await browser.newPage();
   await page.setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36");
   console.log('Scraping ' + url)
-  await page.goto(url, {
-    waitUntil: 'load',
-    timeout: 0,
-  });
+  await page.goto(url);
+  await page.waitForTimeout(timer);
+  await page.waitForSelector('article.product-card');
 
   let prods = await page.evaluate(() => {
-    let items = document.body.querySelectorAll('div.product-tile');
+    let items = document.body.querySelectorAll('article.product-card')
     let _items = Object.values(items).map(em => {
-      let item_json = JSON.parse(em.getAttribute('data-analytics-data'));
-      let item_url = em.querySelector('a.product-tile-link').getAttribute('href');
-      item_url = 'https://www.gracobaby.com' + item_url;
+      // let item_json = JSON.parse(em.querySelector('div.product-card__figure').querySelector('a.product-card__image').getAttribute('data-analytics-sent'));
       return {
-        prod_url: item_url,
-        prod_id: item_json['product_sku'],
-        item_id: item_json['id'],
-        name: item_json['name'],
-        img_url: em.querySelector('img.tile-image').getAttribute('src'),
-        price: item_json['price'],
+        // item_id: item_json['name'],
+        // prod_id: item_json['product_id'],
+        name: em.querySelector('h1.product-card__title').textContent.trim(),
+        // category: item_json['category'],
+        // prod_url: em.querySelector('div.product-card__figure').querySelector('a.product-card__image').getAttribute('href'),
+        // img_url: em.querySelector('div.product-card__figure').querySelector('a.product-card__image').querySelector('img').getAttribute('src'),
+        // price: item_json['price']
       }
-
     })
     return _items;
-  });
+  })
+
   await browser.close()
   return prods;
-}
+};
