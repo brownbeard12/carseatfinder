@@ -6,7 +6,8 @@ exports.chicco = functions.https.onRequest((request, response) => {
   require('dotenv').config()
   const faunadb = require('faunadb')
   const q = faunadb.query
-  const pup = require('puppeteer');
+  const chromium = require('chrome-aws-lambda');
+  const puppeteer = require('puppeteer-core');
   const utils = require('./utils.js')
 
   //Setup Fauna
@@ -58,7 +59,12 @@ exports.chicco = functions.https.onRequest((request, response) => {
   //Scrape function
   async function scrape(url) {
     const timer = 500
-    const browser = await pup.launch({ headless: true, args: ['--no-sandbox'] })
+    const browser = await puppeteer.launch({
+      args: chromium.args,
+      defaultViewport: chromium.defaultViewport,
+      executablePath: await chromium.executablePath,
+      headless: chromium.headless,
+    });
     const page = await browser.newPage();
     console.log('Scraping ' + url)
     await page.goto(url);
@@ -102,7 +108,8 @@ exports.diono = functions.https.onRequest((request, response) => {
   require('dotenv').config()
   const faunadb = require('faunadb')
   const q = faunadb.query
-  const pup = require('puppeteer');
+  const chromium = require('chrome-aws-lambda');
+  const puppeteer = require('puppeteer-core');
   const utils = require('./utils.js')
 
   //Setup Fauna
@@ -154,7 +161,12 @@ exports.diono = functions.https.onRequest((request, response) => {
   //Scrape function
   async function scrape(url) {
     const timer = 200
-    const browser = await pup.launch({ headless: true, args: ['--no-sandbox'] })
+    const browser = await puppeteer.launch({
+      args: chromium.args,
+      defaultViewport: chromium.defaultViewport,
+      executablePath: await chromium.executablePath,
+      headless: chromium.headless,
+    });
     const page = await browser.newPage();
     console.log('Scraping ' + url)
     await page.goto(url);
@@ -267,7 +279,8 @@ exports.graco = functions.runWith({ memory: '2GB' }).https.onRequest((request, r
   require('dotenv').config()
   const faunadb = require('faunadb')
   const q = faunadb.query
-  const pup = require('puppeteer');
+  const chromium = require('chrome-aws-lambda');
+  const puppeteer = require('puppeteer-core');
   const utils = require('./utils.js')
 
   //Setup Fauna
@@ -322,15 +335,17 @@ exports.graco = functions.runWith({ memory: '2GB' }).https.onRequest((request, r
   //Scrape function
   async function scrape(url) {
     const timer = 200;
-    const browser = await pup.launch({ headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox'] })
-    const page = await browser.newPage();
-    await page.setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36");
-    console.log('Scraping ' + url)
-    await page.goto(url, {
-      waitUntil: 'load',
-      timeout: 0,
+    const browser = await puppeteer.launch({
+      args: chromium.args,
+      defaultViewport: chromium.defaultViewport,
+      executablePath: await chromium.executablePath,
+      headless: chromium.headless,
     });
-    // await page.waitForTimeout(timer);
+    const page = await browser.newPage();
+    // await page.setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36");
+    console.log('Scraping ' + url)
+    await page.goto(url);
+    await page.waitForTimeout(timer);
     // await page.keyboard.press('Escape');
 
     let prods = await page.evaluate(() => {
