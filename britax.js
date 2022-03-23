@@ -31,8 +31,8 @@ const client = new faunadb.Client({
 
 //Setup scrape
 const main_url = 'https://us.britax.com/';
-const cat_url = ['shop/car-seats/rear-facing-only']
-const cat = ['Infant', 'Convertible', 'All-in-One', 'Booster']
+const cat_url = ['shop/car-seats/rear-facing-only', 'shop/car-seats/rear-facing-forward-facing', 'shop/car-seats/forward-facing-only']
+const cat = ['Infant', 'Convertible', 'Booster']
 const brand_name = 'Britax';
 const prod_status = 'active';
 
@@ -54,12 +54,15 @@ const prod_status = 'active';
 
 //Scrape function
 async function scrape(url) {
-  const timer = 300
-  const browser = await pup.launch({ headless: false, args: ['--no-sandbox'] })
+  const timer = 100
+  const browser = await pup.launch({ headless: true, args: ['--no-sandbox'] })
   const page = await browser.newPage();
   await page.setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36");
   console.log('Scraping ' + url)
-  await page.goto(url);
+  await page.goto(url, {
+    waitUntil: 'load',
+    timeout: 0,
+  });
   await page.waitForTimeout(timer);
   await page.waitForSelector('article.product-card');
 
@@ -68,13 +71,12 @@ async function scrape(url) {
     let _items = Object.values(items).map(em => {
       // let item_json = JSON.parse(em.querySelector('div.product-card__figure').querySelector('a.product-card__image').getAttribute('data-analytics-sent'));
       return {
-        // item_id: item_json['name'],
-        // prod_id: item_json['product_id'],
+        item_id: em.querySelector('h1.product-card__title').textContent.trim(),
+        prod_id: null,
         name: em.querySelector('h1.product-card__title').textContent.trim(),
-        // category: item_json['category'],
-        // prod_url: em.querySelector('div.product-card__figure').querySelector('a.product-card__image').getAttribute('href'),
-        // img_url: em.querySelector('div.product-card__figure').querySelector('a.product-card__image').querySelector('img').getAttribute('src'),
-        // price: item_json['price']
+        prod_url: em.querySelector('a.product-card__link').getAttribute('href'),
+        img_url: em.querySelector('a.product-card__link').querySelector('source').getAttribute('data-srcset'),
+        price: em.querySelector('div.product-card__inner').querySelector('div.items-center').querySelectorAll('span')[1].textContent.trim(),
       }
     })
     return _items;

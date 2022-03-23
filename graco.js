@@ -48,7 +48,7 @@ const prod_status = 'active';
       prod.timestamp = Date.now();
     }
     console.log(prod_list);
-    // utils.addOrUpdate(client, q, prod_list);
+    utils.addOrUpdate(client, q, prod_list);
   }
 })()
 // .then(() => response.send("Complete!"));
