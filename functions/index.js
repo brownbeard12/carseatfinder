@@ -372,7 +372,7 @@ exports.graco = functions.runWith({ memory: '2GB' }).https.onRequest((request, r
 //-------------------------------
 
 // ------- Britax ----------
-exports.britax = functions.https.onRequest((request, response) => {
+exports.britax = functions.runWith({ memory: '2GB' }).https.onRequest((request, response) => {
 
   require('dotenv').config()
   const faunadb = require('faunadb')
@@ -443,18 +443,19 @@ exports.britax = functions.https.onRequest((request, response) => {
     await page.setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36");
     console.log('Scraping ' + url)
     await page.goto(url);
-    await page.waitForTimeout(timer);
     await page.waitForSelector('article.product-card');
 
     let prods = await page.evaluate(() => {
       let items = document.body.querySelectorAll('article.product-card')
       let _items = Object.values(items).map(em => {
+        let _img_url = em.querySelector('a.product-card__link').querySelector('source').getAttribute('data-srcset');
+        let split_pos = _img_url.search(' 1x,');
         return {
           item_id: em.querySelector('h1.product-card__title').textContent.trim(),
           prod_id: null,
           name: em.querySelector('h1.product-card__title').textContent.trim(),
           prod_url: em.querySelector('a.product-card__link').getAttribute('href'),
-          img_url: em.querySelector('a.product-card__link').querySelector('source').getAttribute('data-srcset'),
+          img_url: _img_url.slice(0, split_pos),
           price: em.querySelector('div.product-card__inner').querySelector('div.items-center').querySelectorAll('span')[1].textContent.trim(),
         }
       })

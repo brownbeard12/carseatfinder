@@ -6,7 +6,8 @@ async function addOrUpdate(client, q, prod_data) {
           {
             itemId: q.Select(['item_id'], q.Var('item')),
             itemPrice: q.Select(['price'], q.Var('item')),
-            itemTS: q.Select(['timestamp'], q.Var('item'))
+            itemTS: q.Select(['timestamp'], q.Var('item')),
+            itemImgUrl: q.Select(['img_url'], q.Var('item'))
           },
           q.If(
             q.Exists(q.Match(q.Index('products'), q.Var('itemId'))),
@@ -21,6 +22,7 @@ async function addOrUpdate(client, q, prod_data) {
                   {
                     data: {
                       price: q.Var('itemPrice'),
+                      img_url: q.Var('itemImgUrl'),
                       status: 'active',
                       timestamp: q.Var('itemTS')
                     }
