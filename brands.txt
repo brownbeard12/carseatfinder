@@ -3,11 +3,10 @@ Uppa baby
 Nuna
 Safety 1st
 Evenflo
-Britax
 Maxi-Cosi
 Clek
 
-
+---Marketplaces---
 Amazon
 Albee baby
 Walmart
@@ -19,3 +18,4 @@ Chicco
 Diono
 Cosco
 Graco
+Britax
