@@ -856,5 +856,6 @@ exports.updateStatus = functions.https.onRequest((request, response) => {
   //Call query
 
 
-  utils.updateStatus(client, q);
+  utils.updateStatus(client, q).then(() => response.send("Complete!"));
+
 })
