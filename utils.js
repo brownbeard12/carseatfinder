@@ -43,7 +43,29 @@ async function addOrUpdate(client, q, prod_data) {
     .catch((err) => console.log(err))
 }
 
+async function updateStatus(client, q) {
+  await client.query(
+    q.Map(
+      q.Paginate(q.Range(q.Match(q.Index("ts")), [], [q.Subtract(q.ToMillis(q.Now()), 260000000)])),
+      q.Lambda(
+        ["ts", "ref", "status"],
+        q.Update(
+          q.Select("ref", q.Get(q.Var("ref"))),
+          {
+            data:
+            {
+              status: 'inactive'
+            }
+          })
+      )
+    )
+  )
+    //.then(item => console.log(item))
+    .catch((err) => console.log(err))
+}
+
 
 module.exports = {
-  addOrUpdate
+  addOrUpdate,
+  updateStatus
 }

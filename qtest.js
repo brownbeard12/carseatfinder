@@ -1,32 +1,34 @@
 require('dotenv').config()
 const faunadb = require('faunadb')
 const q = faunadb.query
-const pup = require('puppeteer');
 const utils = require('./utils.js')
 
+//Setup Fauna
+const secret = process.env.FAUNADB_SECRET
+let endpoint = process.env.FAUNADB_ENDPOINT
 
-//Setup scrape object
-const tgt = {
-  main_url: 'https://store.diono.com/car-seats/',
-  cat_url: ['all-in-one-convertibles/'/*, 'boosters/'*/],
-  brand_name: 'Diono',
-  prod_status: 'active',
-  all_sel: 'article.product-card',
-  img_url: ['div.product-card__figure', 'a.product-card__image', 'img', 'src'],
-};
+if (typeof secret === 'undefined' || secret === '') {
+  console.error('key not set')
+  process.exit(1)
+}
+
+if (!endpoint) endpoint = 'https://db.us.fauna.com'
+
+let mg, domain, port, scheme
+if ((mg = endpoint.match(/^(https?):\/\/([^:]+)(:(\d+))?/))) {
+  scheme = mg[1] || 'https'
+  domain = mg[2] || 'db.us.fauna.com'
+  port = mg[4] || 443
+}
+
+const client = new faunadb.Client({
+  secret: secret,
+  domain: domain,
+  port: port,
+  scheme: scheme,
+})
+
+//Call query
 
 
-//Call scrape + query
-(async () => {
-  for (let i = 0; i < tgt.cat_url.length; i++) {
-    let prod_list = await utils.scrape(pup, tgt);
-    // for (prod of prod_list) {
-    //   prod.brand = brand_name;
-    //   prod.status = prod_status;
-    //   prod.category = cat[i];
-    //   prod.timestamp = Date.now();
-    // }
-    console.log(prod_list);
-    // utils.addOrUpdate(client, q, prod_list);
-  }
-})();
+utils.updateStatus(client, q);
