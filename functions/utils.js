@@ -1,3 +1,6 @@
+
+// Check if item exists, add to db or update existing entry
+
 async function addOrUpdate(client, q, prod_data) {
   await client.query(
     q.Map(prod_data,
@@ -43,6 +46,7 @@ async function addOrUpdate(client, q, prod_data) {
     .catch((err) => console.log(err))
 }
 
+// Update status to 'inactive' if entry not updated for 3 or more days
 async function updateStatus(client, q) {
   await client.query(
     q.Map(
@@ -64,7 +68,25 @@ async function updateStatus(client, q) {
     .catch((err) => console.log(err))
 }
 
+// Update status to 'inactive' if entry has zero price
+async function updateStatusForZeroPrice(client, q) {
+  await client.query(
+    q.Map(
+      q.Paginate(q.Match(q.Index("price-term"), "0")),
+      q.Lambda(
+        ["ref", "price"],
+        q.Update(q.Var("ref"), {
+          data: { status: "inactive" }
+        })
+      )
+    )
+  )
+    //.then(item => console.log(item))
+    .catch((err) => console.log(err))
+}
+
 module.exports = {
   addOrUpdate,
-  updateStatus
+  updateStatus,
+  updateStatusForZeroPrice
 }
