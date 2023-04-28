@@ -70,8 +70,8 @@ async function scrape(url) {
       let split_pos = item_price.search(/\$/);
       
       return {
-        //item_id: 'evenflo-' + em.querySelector('div.info').querySelector('span').getAttribute('data-id'),
-        //prod_id: em.querySelector('div.info').querySelector('span').getAttribute('data-id'),
+        item_id: 'unk',//'evenflo-' + em.querySelector('div.info').querySelector('span').getAttribute('data-id'),
+        prod_id: 'unk',//em.querySelector('div.info').querySelector('span').getAttribute('data-id'),
         name: em.querySelector('div.image-element__wrap').querySelector('img').getAttribute('alt'),
         prod_url: 'https://www.evenflo.com' + em.querySelector('a.product-info__caption').getAttribute('href'),
         img_url: em.querySelector('div.image-element__wrap').querySelector('img').getAttribute('src'),

@@ -1,0 +1,14 @@
+[debug] [2023-04-28T17:50:33.359Z] ----------------------------------------------------------------------
+[debug] [2023-04-28T17:50:33.362Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\rossm\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only functions:evenflo
+[debug] [2023-04-28T17:50:33.362Z] CLI Version:   11.29.1
+[debug] [2023-04-28T17:50:33.362Z] Platform:      win32
+[debug] [2023-04-28T17:50:33.362Z] Node Version:  v18.14.0
+[debug] [2023-04-28T17:50:33.363Z] Time:          Fri Apr 28 2023 13:50:33 GMT-0400 (Eastern Daylight Time)
+[debug] [2023-04-28T17:50:33.364Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-04-28T17:50:33.443Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-04-28T17:50:33.444Z] > authorizing via signed-in user (ross.matheny@gmail.com)
+[debug] [2023-04-28T17:50:33.444Z] [iam] checking project carseatfinder-54e10 for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2023-04-28T17:50:33.446Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/carseatfinder-54e10:testIamPermissions [none]
+[debug] [2023-04-28T17:50:33.446Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/carseatfinder-54e10:testIamPermissions x-goog-quota-user=projects/carseatfinder-54e10
+[debug] [2023-04-28T17:50:33.446Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/carseatfinder-54e10:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}

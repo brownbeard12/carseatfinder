@@ -1,0 +1,53 @@
+[debug] [2023-04-28T17:28:21.274Z] ----------------------------------------------------------------------
+[debug] [2023-04-28T17:28:21.277Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\rossm\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only functions:evenflo
+[debug] [2023-04-28T17:28:21.277Z] CLI Version:   11.29.1
+[debug] [2023-04-28T17:28:21.278Z] Platform:      win32
+[debug] [2023-04-28T17:28:21.278Z] Node Version:  v18.14.0
+[debug] [2023-04-28T17:28:21.279Z] Time:          Fri Apr 28 2023 13:28:21 GMT-0400 (Eastern Daylight Time)
+[debug] [2023-04-28T17:28:21.279Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-04-28T17:28:21.342Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-04-28T17:28:21.343Z] > authorizing via signed-in user (ross.matheny@gmail.com)
+[debug] [2023-04-28T17:28:21.343Z] [iam] checking project carseatfinder-54e10 for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2023-04-28T17:28:21.344Z] > refreshing access token with scopes: []
+[debug] [2023-04-28T17:28:21.346Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2023-04-28T17:28:21.346Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2023-04-28T17:28:21.928Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 400
+[debug] [2023-04-28T17:28:21.929Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2023-04-28T17:28:21.930Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/carseatfinder-54e10:testIamPermissions [none]
+[debug] [2023-04-28T17:28:21.930Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/carseatfinder-54e10:testIamPermissions x-goog-quota-user=projects/carseatfinder-54e10
+[debug] [2023-04-28T17:28:21.930Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/carseatfinder-54e10:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2023-04-28T17:28:22.276Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/carseatfinder-54e10:testIamPermissions 401
+[debug] [2023-04-28T17:28:22.277Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/carseatfinder-54e10:testIamPermissions {"error":{"code":401,"message":"Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.","status":"UNAUTHENTICATED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"ACCESS_TOKEN_TYPE_UNSUPPORTED","metadata":{"service":"cloudresourcemanager.googleapis.com","method":"google.cloudresourcemanager.v1.Projects.TestIamPermissions"}}]}}
+[debug] [2023-04-28T17:28:22.278Z] [iam] error while checking permissions, command may fail: FirebaseError: HTTP Error: 401, Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.
+[debug] [2023-04-28T17:28:22.278Z] > refreshing access token with scopes: []
+[debug] [2023-04-28T17:28:22.279Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2023-04-28T17:28:22.279Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2023-04-28T17:28:22.988Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 400
+[debug] [2023-04-28T17:28:22.988Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2023-04-28T17:28:22.988Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/carseatfinder-54e10/serviceAccounts/carseatfinder-54e10@appspot.gserviceaccount.com:testIamPermissions [none]
+[debug] [2023-04-28T17:28:22.988Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/carseatfinder-54e10/serviceAccounts/carseatfinder-54e10@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2023-04-28T17:28:23.530Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/carseatfinder-54e10/serviceAccounts/carseatfinder-54e10@appspot.gserviceaccount.com:testIamPermissions 401
+[debug] [2023-04-28T17:28:23.530Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/carseatfinder-54e10/serviceAccounts/carseatfinder-54e10@appspot.gserviceaccount.com:testIamPermissions {"error":{"code":401,"message":"Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.","status":"UNAUTHENTICATED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"ACCESS_TOKEN_TYPE_UNSUPPORTED","metadata":{"service":"iam.googleapis.com","method":"google.iam.admin.v1.IAM.TestIamPermissions"}}]}}
+[debug] [2023-04-28T17:28:23.530Z] [functions] service account IAM check errored, deploy may fail:HTTP Error: 401, Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project. {"name":"FirebaseError","children":[],"context":{"body":{"error":{"code":401,"message":"Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.","status":"UNAUTHENTICATED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"ACCESS_TOKEN_TYPE_UNSUPPORTED","metadata":{"service":"iam.googleapis.com","method":"google.iam.admin.v1.IAM.TestIamPermissions"}}]}},"response":{"statusCode":401}},"exit":1,"message":"HTTP Error: 401, Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.","status":401}
+[info] 
+[info] === Deploying to 'carseatfinder-54e10'...
+[info] 
+[info] i  deploying functions 
+[info] Running command: npm --prefix "$RESOURCE_DIR" run lint
+[info] +  functions: Finished running predeploy script. 
+[debug] [2023-04-28T17:28:25.283Z] > refreshing access token with scopes: []
+[debug] [2023-04-28T17:28:25.283Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2023-04-28T17:28:25.283Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2023-04-28T17:28:25.613Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 400
+[debug] [2023-04-28T17:28:25.613Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2023-04-28T17:28:25.614Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/carseatfinder-54e10 [none]
+[debug] [2023-04-28T17:28:26.086Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/carseatfinder-54e10 401
+[debug] [2023-04-28T17:28:26.086Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/carseatfinder-54e10 {"error":{"code":401,"message":"Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.","status":"UNAUTHENTICATED"}}
+[debug] [2023-04-28T17:28:26.086Z] HTTP Error: 401, Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.
+[debug] [2023-04-28T17:28:26.087Z] FirebaseError: HTTP Error: 401, Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.
+    at responseToError (C:\Users\rossm\AppData\Roaming\npm\node_modules\firebase-tools\lib\responseToError.js:49:12)
+    at RetryOperation._fn (C:\Users\rossm\AppData\Roaming\npm\node_modules\firebase-tools\lib\apiv2.js:288:77)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[error] 
+[error] Error: Failed to get Firebase project carseatfinder-54e10. Please make sure the project exists and your account has permission to access it.
