@@ -12,3 +12,45 @@
 [debug] [2023-04-28T17:50:33.446Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/carseatfinder-54e10:testIamPermissions [none]
 [debug] [2023-04-28T17:50:33.446Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/carseatfinder-54e10:testIamPermissions x-goog-quota-user=projects/carseatfinder-54e10
 [debug] [2023-04-28T17:50:33.446Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/carseatfinder-54e10:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2023-04-28T17:50:34.209Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/carseatfinder-54e10:testIamPermissions 200
+[debug] [2023-04-28T17:50:34.209Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/carseatfinder-54e10:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2023-04-28T17:50:34.210Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/carseatfinder-54e10/serviceAccounts/carseatfinder-54e10@appspot.gserviceaccount.com:testIamPermissions [none]
+[debug] [2023-04-28T17:50:34.210Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/carseatfinder-54e10/serviceAccounts/carseatfinder-54e10@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2023-04-28T17:50:35.533Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/carseatfinder-54e10/serviceAccounts/carseatfinder-54e10@appspot.gserviceaccount.com:testIamPermissions 200
+[debug] [2023-04-28T17:50:35.533Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/carseatfinder-54e10/serviceAccounts/carseatfinder-54e10@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[info] 
+[info] === Deploying to 'carseatfinder-54e10'...
+[info] 
+[info] i  deploying functions 
+[info] Running command: npm --prefix "$RESOURCE_DIR" run lint
+[info] +  functions: Finished running predeploy script. 
+[debug] [2023-04-28T17:50:37.397Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/carseatfinder-54e10 [none]
+[debug] [2023-04-28T17:50:38.606Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/carseatfinder-54e10 200
+[debug] [2023-04-28T17:50:38.607Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/carseatfinder-54e10 {"projectId":"carseatfinder-54e10","projectNumber":"390220032792","displayName":"carseatfinder","name":"projects/carseatfinder-54e10","resources":{"hostingSite":"carseatfinder-54e10","storageBucket":"carseatfinder-54e10.appspot.com","locationId":"us-central"},"state":"ACTIVE","etag":"1_a7e63e6e-56d9-4406-a38c-b43dc68b3bb1"}
+[info] i  functions: preparing codebase default for deployment 
+[info] i  functions: ensuring required API cloudfunctions.googleapis.com is enabled... 
+[info] i  functions: ensuring required API cloudbuild.googleapis.com is enabled... 
+[info] i  artifactregistry: ensuring required API artifactregistry.googleapis.com is enabled... 
+[debug] [2023-04-28T17:50:38.615Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/carseatfinder-54e10/services/cloudfunctions.googleapis.com [none]
+[debug] [2023-04-28T17:50:38.615Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/carseatfinder-54e10/services/cloudfunctions.googleapis.com x-goog-quota-user=projects/carseatfinder-54e10
+[debug] [2023-04-28T17:50:38.619Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/carseatfinder-54e10/services/runtimeconfig.googleapis.com [none]
+[debug] [2023-04-28T17:50:38.619Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/carseatfinder-54e10/services/runtimeconfig.googleapis.com x-goog-quota-user=projects/carseatfinder-54e10
+[debug] [2023-04-28T17:50:38.622Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/carseatfinder-54e10/services/cloudbuild.googleapis.com [none]
+[debug] [2023-04-28T17:50:38.623Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/carseatfinder-54e10/services/cloudbuild.googleapis.com x-goog-quota-user=projects/carseatfinder-54e10
+[debug] [2023-04-28T17:50:38.625Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/carseatfinder-54e10/services/artifactregistry.googleapis.com [none]
+[debug] [2023-04-28T17:50:38.626Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/carseatfinder-54e10/services/artifactregistry.googleapis.com x-goog-quota-user=projects/carseatfinder-54e10
+[debug] [2023-04-28T17:50:39.860Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/carseatfinder-54e10/services/artifactregistry.googleapis.com 200
+[debug] [2023-04-28T17:50:39.860Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/carseatfinder-54e10/services/artifactregistry.googleapis.com [omitted]
+[info] +  artifactregistry: required API artifactregistry.googleapis.com is enabled 
+[debug] [2023-04-28T17:50:39.866Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/carseatfinder-54e10/services/cloudfunctions.googleapis.com 200
+[debug] [2023-04-28T17:50:39.866Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/carseatfinder-54e10/services/cloudfunctions.googleapis.com [omitted]
+[info] +  functions: required API cloudfunctions.googleapis.com is enabled 
+[debug] [2023-04-28T17:50:39.887Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/carseatfinder-54e10/services/cloudbuild.googleapis.com 200
+[debug] [2023-04-28T17:50:39.887Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/carseatfinder-54e10/services/cloudbuild.googleapis.com [omitted]
+[info] +  functions: required API cloudbuild.googleapis.com is enabled 
+[debug] [2023-04-28T17:50:39.893Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/carseatfinder-54e10/services/runtimeconfig.googleapis.com 200
+[debug] [2023-04-28T17:50:39.893Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/carseatfinder-54e10/services/runtimeconfig.googleapis.com [omitted]
+[debug] [2023-04-28T17:50:39.893Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/carseatfinder-54e10/adminSdkConfig [none]
+[debug] [2023-04-28T17:50:40.433Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/carseatfinder-54e10/adminSdkConfig 200
+[debug] [2023-04-28T17:50:40.433Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/carseatfinder-54e10/adminSdkConfig {"projectId":"carseatfinder-54e10","storageBucket":"carseatfinder-54e10.appspot.com","locationId":"us-central"}
+[debug] [2023-04-28T17:50:40.434Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/carseatfinder-54e10/configs [none]
